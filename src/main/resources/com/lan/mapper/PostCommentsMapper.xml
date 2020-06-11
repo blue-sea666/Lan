@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.mapper.PostCommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.lan.pojo.PostComments" >
+    <id column="post_comments_id" property="postCommentsId" jdbcType="INTEGER" />
+    <result column="post_comments_author" property="postCommentsAuthor" jdbcType="VARCHAR" />
+    <result column="post_comments_post_id" property="postCommentsPostId" jdbcType="INTEGER" />
+    <result column="post_comments_addtime" property="postCommentsAddtime" jdbcType="TIMESTAMP" />
+    <result column="post_comments_pid" property="postCommentsPid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lan.pojo.PostComments" extends="BaseResultMap" >
+    <result column="post_comments_content" property="postCommentsContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    post_comments_id, post_comments_author, post_comments_post_id, post_comments_addtime, 
+    post_comments_pid
+  </sql>
+  <sql id="Blob_Column_List" >
+    post_comments_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lan.pojo.PostCommentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from post_comments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lan.pojo.PostCommentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from post_comments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from post_comments
+    where post_comments_id = #{postCommentsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from post_comments
+    where post_comments_id = #{postCommentsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lan.pojo.PostCommentsExample" >
+    delete from post_comments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lan.pojo.PostComments" >
+    insert into post_comments (post_comments_id, post_comments_author, 
+      post_comments_post_id, post_comments_addtime, 
+      post_comments_pid, post_comments_content
+      )
+    values (#{postCommentsId,jdbcType=INTEGER}, #{postCommentsAuthor,jdbcType=VARCHAR}, 
+      #{postCommentsPostId,jdbcType=INTEGER}, #{postCommentsAddtime,jdbcType=TIMESTAMP}, 
+      #{postCommentsPid,jdbcType=INTEGER}, #{postCommentsContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lan.pojo.PostComments" >
+    insert into post_comments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="postCommentsId != null" >
+        post_comments_id,
+      </if>
+      <if test="postCommentsAuthor != null" >
+        post_comments_author,
+      </if>
+      <if test="postCommentsPostId != null" >
+        post_comments_post_id,
+      </if>
+      <if test="postCommentsAddtime != null" >
+        post_comments_addtime,
+      </if>
+      <if test="postCommentsPid != null" >
+        post_comments_pid,
+      </if>
+      <if test="postCommentsContent != null" >
+        post_comments_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="postCommentsId != null" >
+        #{postCommentsId,jdbcType=INTEGER},
+      </if>
+      <if test="postCommentsAuthor != null" >
+        #{postCommentsAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="postCommentsPostId != null" >
+        #{postCommentsPostId,jdbcType=INTEGER},
+      </if>
+      <if test="postCommentsAddtime != null" >
+        #{postCommentsAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postCommentsPid != null" >
+        #{postCommentsPid,jdbcType=INTEGER},
+      </if>
+      <if test="postCommentsContent != null" >
+        #{postCommentsContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lan.pojo.PostCommentsExample" resultType="java.lang.Integer" >
+    select count(*) from post_comments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update post_comments
+    <set >
+      <if test="record.postCommentsId != null" >
+        post_comments_id = #{record.postCommentsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.postCommentsAuthor != null" >
+        post_comments_author = #{record.postCommentsAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postCommentsPostId != null" >
+        post_comments_post_id = #{record.postCommentsPostId,jdbcType=INTEGER},
+      </if>
+      <if test="record.postCommentsAddtime != null" >
+        post_comments_addtime = #{record.postCommentsAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.postCommentsPid != null" >
+        post_comments_pid = #{record.postCommentsPid,jdbcType=INTEGER},
+      </if>
+      <if test="record.postCommentsContent != null" >
+        post_comments_content = #{record.postCommentsContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update post_comments
+    set post_comments_id = #{record.postCommentsId,jdbcType=INTEGER},
+      post_comments_author = #{record.postCommentsAuthor,jdbcType=VARCHAR},
+      post_comments_post_id = #{record.postCommentsPostId,jdbcType=INTEGER},
+      post_comments_addtime = #{record.postCommentsAddtime,jdbcType=TIMESTAMP},
+      post_comments_pid = #{record.postCommentsPid,jdbcType=INTEGER},
+      post_comments_content = #{record.postCommentsContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update post_comments
+    set post_comments_id = #{record.postCommentsId,jdbcType=INTEGER},
+      post_comments_author = #{record.postCommentsAuthor,jdbcType=VARCHAR},
+      post_comments_post_id = #{record.postCommentsPostId,jdbcType=INTEGER},
+      post_comments_addtime = #{record.postCommentsAddtime,jdbcType=TIMESTAMP},
+      post_comments_pid = #{record.postCommentsPid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lan.pojo.PostComments" >
+    update post_comments
+    <set >
+      <if test="postCommentsAuthor != null" >
+        post_comments_author = #{postCommentsAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="postCommentsPostId != null" >
+        post_comments_post_id = #{postCommentsPostId,jdbcType=INTEGER},
+      </if>
+      <if test="postCommentsAddtime != null" >
+        post_comments_addtime = #{postCommentsAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postCommentsPid != null" >
+        post_comments_pid = #{postCommentsPid,jdbcType=INTEGER},
+      </if>
+      <if test="postCommentsContent != null" >
+        post_comments_content = #{postCommentsContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where post_comments_id = #{postCommentsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lan.pojo.PostComments" >
+    update post_comments
+    set post_comments_author = #{postCommentsAuthor,jdbcType=VARCHAR},
+      post_comments_post_id = #{postCommentsPostId,jdbcType=INTEGER},
+      post_comments_addtime = #{postCommentsAddtime,jdbcType=TIMESTAMP},
+      post_comments_pid = #{postCommentsPid,jdbcType=INTEGER},
+      post_comments_content = #{postCommentsContent,jdbcType=LONGVARCHAR}
+    where post_comments_id = #{postCommentsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lan.pojo.PostComments" >
+    update post_comments
+    set post_comments_author = #{postCommentsAuthor,jdbcType=VARCHAR},
+      post_comments_post_id = #{postCommentsPostId,jdbcType=INTEGER},
+      post_comments_addtime = #{postCommentsAddtime,jdbcType=TIMESTAMP},
+      post_comments_pid = #{postCommentsPid,jdbcType=INTEGER}
+    where post_comments_id = #{postCommentsId,jdbcType=INTEGER}
+  </update>
+</mapper>

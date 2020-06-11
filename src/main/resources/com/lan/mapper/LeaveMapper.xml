@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.mapper.LeaveMapper" >
+  <resultMap id="BaseResultMap" type="com.lan.pojo.Leave" >
+    <id column="leave_id" property="leaveId" jdbcType="INTEGER" />
+    <result column="leave_pid" property="leavePid" jdbcType="INTEGER" />
+    <result column="leave_username" property="leaveUsername" jdbcType="VARCHAR" />
+    <result column="leave_time" property="leaveTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lan.pojo.Leave" extends="BaseResultMap" >
+    <result column="leave_content" property="leaveContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    leave_id, leave_pid, leave_username, leave_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    leave_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lan.pojo.LeaveExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from leave
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lan.pojo.LeaveExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from leave
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from leave
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from leave
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lan.pojo.LeaveExample" >
+    delete from leave
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lan.pojo.Leave" >
+    insert into leave (leave_id, leave_pid, leave_username, 
+      leave_time, leave_content)
+    values (#{leaveId,jdbcType=INTEGER}, #{leavePid,jdbcType=INTEGER}, #{leaveUsername,jdbcType=VARCHAR}, 
+      #{leaveTime,jdbcType=TIMESTAMP}, #{leaveContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lan.pojo.Leave" >
+    insert into leave
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        leave_id,
+      </if>
+      <if test="leavePid != null" >
+        leave_pid,
+      </if>
+      <if test="leaveUsername != null" >
+        leave_username,
+      </if>
+      <if test="leaveTime != null" >
+        leave_time,
+      </if>
+      <if test="leaveContent != null" >
+        leave_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        #{leaveId,jdbcType=INTEGER},
+      </if>
+      <if test="leavePid != null" >
+        #{leavePid,jdbcType=INTEGER},
+      </if>
+      <if test="leaveUsername != null" >
+        #{leaveUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTime != null" >
+        #{leaveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveContent != null" >
+        #{leaveContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lan.pojo.LeaveExample" resultType="java.lang.Integer" >
+    select count(*) from leave
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update leave
+    <set >
+      <if test="record.leaveId != null" >
+        leave_id = #{record.leaveId,jdbcType=INTEGER},
+      </if>
+      <if test="record.leavePid != null" >
+        leave_pid = #{record.leavePid,jdbcType=INTEGER},
+      </if>
+      <if test="record.leaveUsername != null" >
+        leave_username = #{record.leaveUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveTime != null" >
+        leave_time = #{record.leaveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.leaveContent != null" >
+        leave_content = #{record.leaveContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update leave
+    set leave_id = #{record.leaveId,jdbcType=INTEGER},
+      leave_pid = #{record.leavePid,jdbcType=INTEGER},
+      leave_username = #{record.leaveUsername,jdbcType=VARCHAR},
+      leave_time = #{record.leaveTime,jdbcType=TIMESTAMP},
+      leave_content = #{record.leaveContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update leave
+    set leave_id = #{record.leaveId,jdbcType=INTEGER},
+      leave_pid = #{record.leavePid,jdbcType=INTEGER},
+      leave_username = #{record.leaveUsername,jdbcType=VARCHAR},
+      leave_time = #{record.leaveTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lan.pojo.Leave" >
+    update leave
+    <set >
+      <if test="leavePid != null" >
+        leave_pid = #{leavePid,jdbcType=INTEGER},
+      </if>
+      <if test="leaveUsername != null" >
+        leave_username = #{leaveUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTime != null" >
+        leave_time = #{leaveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveContent != null" >
+        leave_content = #{leaveContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lan.pojo.Leave" >
+    update leave
+    set leave_pid = #{leavePid,jdbcType=INTEGER},
+      leave_username = #{leaveUsername,jdbcType=VARCHAR},
+      leave_time = #{leaveTime,jdbcType=TIMESTAMP},
+      leave_content = #{leaveContent,jdbcType=LONGVARCHAR}
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lan.pojo.Leave" >
+    update leave
+    set leave_pid = #{leavePid,jdbcType=INTEGER},
+      leave_username = #{leaveUsername,jdbcType=VARCHAR},
+      leave_time = #{leaveTime,jdbcType=TIMESTAMP}
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </update>
+</mapper>

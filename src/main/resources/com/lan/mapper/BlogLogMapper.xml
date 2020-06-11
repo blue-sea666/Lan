@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.mapper.BlogLogMapper" >
+  <resultMap id="BaseResultMap" type="com.lan.pojo.BlogLog" >
+    <id column="blog_log_id" property="blogLogId" jdbcType="INTEGER" />
+    <result column="blog_log_time" property="blogLogTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lan.pojo.BlogLog" extends="BaseResultMap" >
+    <result column="blog_log_content" property="blogLogContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    blog_log_id, blog_log_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    blog_log_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lan.pojo.BlogLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lan.pojo.BlogLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_log
+    where blog_log_id = #{blogLogId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog_log
+    where blog_log_id = #{blogLogId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lan.pojo.BlogLogExample" >
+    delete from blog_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lan.pojo.BlogLog" >
+    insert into blog_log (blog_log_id, blog_log_time, blog_log_content
+      )
+    values (#{blogLogId,jdbcType=INTEGER}, #{blogLogTime,jdbcType=TIMESTAMP}, #{blogLogContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lan.pojo.BlogLog" >
+    insert into blog_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blogLogId != null" >
+        blog_log_id,
+      </if>
+      <if test="blogLogTime != null" >
+        blog_log_time,
+      </if>
+      <if test="blogLogContent != null" >
+        blog_log_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blogLogId != null" >
+        #{blogLogId,jdbcType=INTEGER},
+      </if>
+      <if test="blogLogTime != null" >
+        #{blogLogTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogLogContent != null" >
+        #{blogLogContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lan.pojo.BlogLogExample" resultType="java.lang.Integer" >
+    select count(*) from blog_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update blog_log
+    <set >
+      <if test="record.blogLogId != null" >
+        blog_log_id = #{record.blogLogId,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogLogTime != null" >
+        blog_log_time = #{record.blogLogTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blogLogContent != null" >
+        blog_log_content = #{record.blogLogContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update blog_log
+    set blog_log_id = #{record.blogLogId,jdbcType=INTEGER},
+      blog_log_time = #{record.blogLogTime,jdbcType=TIMESTAMP},
+      blog_log_content = #{record.blogLogContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update blog_log
+    set blog_log_id = #{record.blogLogId,jdbcType=INTEGER},
+      blog_log_time = #{record.blogLogTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lan.pojo.BlogLog" >
+    update blog_log
+    <set >
+      <if test="blogLogTime != null" >
+        blog_log_time = #{blogLogTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogLogContent != null" >
+        blog_log_content = #{blogLogContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where blog_log_id = #{blogLogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lan.pojo.BlogLog" >
+    update blog_log
+    set blog_log_time = #{blogLogTime,jdbcType=TIMESTAMP},
+      blog_log_content = #{blogLogContent,jdbcType=LONGVARCHAR}
+    where blog_log_id = #{blogLogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lan.pojo.BlogLog" >
+    update blog_log
+    set blog_log_time = #{blogLogTime,jdbcType=TIMESTAMP}
+    where blog_log_id = #{blogLogId,jdbcType=INTEGER}
+  </update>
+</mapper>

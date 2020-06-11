@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.mapper.BlogConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.lan.pojo.BlogConfig" >
+    <id column="config_id" property="configId" jdbcType="INTEGER" />
+    <result column="config_name" property="configName" jdbcType="VARCHAR" />
+    <result column="config_copyright" property="configCopyright" jdbcType="VARCHAR" />
+    <result column="config_ipc" property="configIpc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    config_id, config_name, config_copyright, config_ipc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lan.pojo.BlogConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from blog_config
+    where config_id = #{configId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog_config
+    where config_id = #{configId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lan.pojo.BlogConfigExample" >
+    delete from blog_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lan.pojo.BlogConfig" >
+    insert into blog_config (config_id, config_name, config_copyright, 
+      config_ipc)
+    values (#{configId,jdbcType=INTEGER}, #{configName,jdbcType=VARCHAR}, #{configCopyright,jdbcType=VARCHAR}, 
+      #{configIpc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lan.pojo.BlogConfig" >
+    insert into blog_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="configId != null" >
+        config_id,
+      </if>
+      <if test="configName != null" >
+        config_name,
+      </if>
+      <if test="configCopyright != null" >
+        config_copyright,
+      </if>
+      <if test="configIpc != null" >
+        config_ipc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="configId != null" >
+        #{configId,jdbcType=INTEGER},
+      </if>
+      <if test="configName != null" >
+        #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configCopyright != null" >
+        #{configCopyright,jdbcType=VARCHAR},
+      </if>
+      <if test="configIpc != null" >
+        #{configIpc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lan.pojo.BlogConfigExample" resultType="java.lang.Integer" >
+    select count(*) from blog_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update blog_config
+    <set >
+      <if test="record.configId != null" >
+        config_id = #{record.configId,jdbcType=INTEGER},
+      </if>
+      <if test="record.configName != null" >
+        config_name = #{record.configName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configCopyright != null" >
+        config_copyright = #{record.configCopyright,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configIpc != null" >
+        config_ipc = #{record.configIpc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update blog_config
+    set config_id = #{record.configId,jdbcType=INTEGER},
+      config_name = #{record.configName,jdbcType=VARCHAR},
+      config_copyright = #{record.configCopyright,jdbcType=VARCHAR},
+      config_ipc = #{record.configIpc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lan.pojo.BlogConfig" >
+    update blog_config
+    <set >
+      <if test="configName != null" >
+        config_name = #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configCopyright != null" >
+        config_copyright = #{configCopyright,jdbcType=VARCHAR},
+      </if>
+      <if test="configIpc != null" >
+        config_ipc = #{configIpc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where config_id = #{configId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lan.pojo.BlogConfig" >
+    update blog_config
+    set config_name = #{configName,jdbcType=VARCHAR},
+      config_copyright = #{configCopyright,jdbcType=VARCHAR},
+      config_ipc = #{configIpc,jdbcType=VARCHAR}
+    where config_id = #{configId,jdbcType=INTEGER}
+  </update>
+</mapper>

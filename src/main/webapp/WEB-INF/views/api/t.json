@@ -1,0 +1,29 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 0,
+  "items": [
+    {
+      "userId": 1,
+      "usersName": "小蓝蓝",
+      "usersPassword": "123",
+      "usersHeadimg": null,
+      "usersSignature": null,
+      "usersSex": null,
+      "usersGithubLink": null,
+      "usersQq": null,
+      "suersEmail": null
+    },
+    {
+      "userId": 2,
+      "usersName": "123",
+      "usersPassword": "123",
+      "usersHeadimg": null,
+      "usersSignature": null,
+      "usersSex": null,
+      "usersGithubLink": null,
+      "usersQq": null,
+      "suersEmail": null
+    }
+  ]
+}
