@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -32,7 +33,8 @@ public class PostController {
 
     //获取表格数据
     @RequestMapping(value = "/getposts", method = RequestMethod.GET)
-    public void findById(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+    @ResponseBody
+    public Object findById(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
 
         //获取所有用户存入list中
         List<Post> list = postService.find();
@@ -45,18 +47,20 @@ public class PostController {
         listObject.setCode(StatusCode.CODE_SUCCESS);
         listObject.setMsg("访问成功");
         listObject.setCount(cout);
+        System.out.println(listObject.getData().toString());
+        return listObject;
         //System.out.println(listObject.toString());
         //将listobject转成json格式并响应到客户端
-        ResponseUtils.renderJson(response, JsonUtils.toJson(listObject));
+        //ResponseUtils.renderJson(response, JsonUtils.toJson(listObject));
 
     }
 
-    //删除用户
+    //删除
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public void delUserById(HttpServletResponse response, @RequestParam("uid") Integer id) {
+    public void delUserById(HttpServletResponse response, @RequestParam("pid") Integer id) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         //执行删除操作
-        Integer integer = postService.delUserById(id);
+        Integer integer = postService.delPostById(id);
         String code = "";
         if (integer > 0) {//删除成功
             code = "1";
@@ -66,11 +70,13 @@ public class PostController {
         ResponseUtils.renderText(response, code);
     }
 
-    //添加用户
+    //添加
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void add(HttpServletResponse response, Post post) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        Integer integer = postService.addUsers(post);
+        post.setPostBrowse(0);
+        post.setPostAddtime(new Date());
+        Integer integer = postService.addPost(post);
         ResponseUtils.renderText(response, integer.toString());
 
     }
@@ -104,11 +110,11 @@ public class PostController {
         ResponseUtils.renderText(response, code);
     }
 
-    //添加用户
+    //添加修改
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void update(HttpServletResponse response, Post post) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        Integer integer = postService.updateUsers(post);
+        Integer integer = postService.updatePost(post);
         String code = "";
         if (integer > 0) {//添加成功
             code = "1";

@@ -10,13 +10,13 @@ public interface PostService {
 
     Integer getCount();
 
-    Integer delUserById(Integer id);
+    Integer delPostById(Integer id);
 
-    Integer addUsers(Post post);
+    Integer addPost(Post post);
 
     Integer delAllUserById(String ids);
 
-    Integer updateUsers(Post post);
+    Integer updatePost(Post post);
 
     List<Post> search(Post post);
 }

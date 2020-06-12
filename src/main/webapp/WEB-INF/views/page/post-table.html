@@ -50,15 +50,15 @@
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'postId', width: 80, title: 'ID', sort: true},
-                {field: 'postTitle', width: 80, title: '标题',minWidth: 200},
-                {field: 'postAddtime', width: 80, title: '发布时间',minWidth: 150},
-                {field: 'postClassifyId',width: 80, title: '分类'},
-                {field: 'postBrowse', width: 120, title: '浏览量'},
+                {field: 'postTitle', width: 120, title: '标题',sort: true},
+                {field: 'postAddtime', width: 200,sort: true, title: '发布时间',minWidth: 150, templet : "<div>{{layui.util.toDateString(d.postAddtime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"},
+                {field: 'classifyName',width: 80, title: '分类',sort: true},
+                {field: 'postBrowse', width: 120, title: '浏览量',sort: true},
                 {field: 'postLink', width: 120, title: '帖子链接'},
-                {field: 'postCopyright', width: 80, title: '帖子版权'},
-                {field: 'postLabel1Id', width: 80, title: '标签1'},
-                {field: 'postLabe21Id', width: 80, title: '标签2'},
-                {field: 'postLabe21Id', width: 80, title: '标签3'},
+                {field: 'postCopyright', width: 120, title: '帖子版权'},
+                {field: 'postLabel1Name', width: 120, title: '标签1',sort: true},
+                {field: 'postLabel2Name', width: 120, title: '标签2',sort: true},
+                {field: 'postLabel3Name', width: 120, title: '标签3',sort: true},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "right"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
@@ -106,7 +106,14 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/add-post.html',
+                    content: '../page/add-post.html'
+                    /*,success: function(layero, index) {
+                       var info=$("#useid").val(),
+                           body = layer.getChildFrame('body', index); // body.html() body里面的内容
+                        layer.alert(info)
+                        // 绑定数据
+                        body.find("#postUserId").val(info)
+                    }*/
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -177,11 +184,6 @@
                         body.find("#qq").val(data.usersQq);
                         body.find("#ems").val(data.suersEmail);
                         body.find("#qm").val(data.usersSignature);
-                        if (data.usersSex=="男"){
-                            body.find("#sex1").style().checked=true;
-                        }else{
-                            body.find("#sex2").style().checked=true;
-                        }
 
                         //div.find("#usersname").val("admin"); // 方式二
                     }
@@ -190,10 +192,10 @@
                     layer.full(index);
                 });
                 return false;
-            } else if (obj.event === 'delete') {
+            } else if (obj.event === 'delete') {//删除
                 layer.confirm('真的删除行么', function (index) {
                    $.ajax({
-                        url:"../../posts/delete?uid=" + data.userId,
+                        url:"../../posts/delete?pid=" + data.postId,
                         type:'get',
                        // data:{'id':data.userId},//向服务端发送删除的id
                         success:function(code){

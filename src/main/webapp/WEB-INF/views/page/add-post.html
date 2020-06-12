@@ -15,11 +15,13 @@
     </style>
 </head>
 <body>
-<form class="layui-form layuimini-form" action="../../user/add" data-method="post">
+<form class="layui-form layuimini-form" lay-filter="froms">
+    <input type="hidden" name="postUserId" value="">
     <div class="layui-form-item">
         <label class="layui-form-label required">标题</label>
         <div class="layui-input-block">
-            <input type="text" name="usersName" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名" value="" class="layui-input">
+            <input type="text" name="postTitle" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名"
+                   value="" class="layui-input">
             <tip>填写帖子标题</tip>
         </div>
     </div>
@@ -28,7 +30,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分类</label>
         <div class="layui-input-block">
-            <select name="interest" lay-filter="aihao">
+            <select id="blogTypeLarge" name="postClassifyId" lay-filter="aihao">
                 <option value=""></option>
                 <option value="0">写作</option>
                 <option value="1">阅读</option>
@@ -41,24 +43,38 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">标签</label>
-        <div class="layui-input-block">
-            <input type="checkbox" name="like[write]" title="写作"><div class="layui-unselect layui-form-checkbox"><span>写作</span><i class="layui-icon layui-icon-ok"></i></div>
-            <input type="checkbox" name="like[read]" title="阅读"><div class="layui-unselect layui-form-checkbox"><span>阅读</span><i class="layui-icon layui-icon-ok"></i></div>
-            <input type="checkbox" name="like[daze]" title="发呆"><div class="layui-unselect layui-form-checkbox"><span>发呆</span><i class="layui-icon layui-icon-ok"></i></div>
+        <div class="layui-input-block" id="fieldslist">
+            <input type="checkbox" name="like[write]" title="写作">
+            <div class="layui-unselect layui-form-checkbox"><span>写作</span><i class="layui-icon layui-icon-ok"></i>
+            </div>
+            <input type="checkbox" name="like[read]" title="阅读">
+            <div class="layui-unselect layui-form-checkbox"><span>阅读</span><i class="layui-icon layui-icon-ok"></i>
+            </div>
+            <input type="checkbox" name="like[daze]" title="发呆">
+            <div class="layui-unselect layui-form-checkbox"><span>发呆</span><i class="layui-icon layui-icon-ok"></i>
+            </div>
         </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">标签</label>
+            <input type="checkbox" name="dd" title="写作">
+            <input type="checkbox" name="liked" title="阅读">
+            <input type="checkbox" name="like" title="发呆">
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label required">版权</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入内容" name="postCopyright" class="layui-textarea"></textarea>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label required">内容</label>
         <div class="layui-input-block">
-            <div id="editor" style="margin: 50px 0 50px 0">
+            <textarea name="postContent" id="ncontent" style="width:100%; height:200px; display:none "></textarea>
+            <div  id="editor" style="margin: 50px 0 50px 0">
                 <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
             </div>
         </div>
@@ -67,53 +83,69 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" type="submit" lay-submit lay-filter="saveBtn">确认保存</button>
+            <button class="layui-btn layui-btn-normal" type="submit" lay-submit lay-filter="saveBtn">确认添加</button>
         </div>
     </div>
 </form>
 <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
 <script>
-    layui.use(['form','layer','wangEditor'], function () {
+    layui.use(['form', 'layer', 'wangEditor', 'upload'], function () {
         var form = layui.form,
             layer = layui.layer,
             $ = layui.$,
+            upload = layui.upload,
             wangEditor = layui.wangEditor;
-
-            var editor = new wangEditor('#editor');
-            editor.customConfig.uploadImgServer = "../api/upload.json";
-            editor.customConfig.uploadFileName = 'image';
-            editor.customConfig.pasteFilterStyle = false;
-            editor.customConfig.uploadImgMaxLength = 5;
-            editor.customConfig.uploadImgHooks = {
-                // 上传超时
-                timeout: function (xhr, editor) {
-                    layer.msg('上传超时！')
-                },
-                // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
-                customInsert: function (insertImg, result, editor) {
-                    console.log(result);
-                    if (result.code == 1) {
-                        var url = result.data.url;
-                        url.forEach(function (e) {
-                            insertImg(e);
-                        })
-                    } else {
-                        layer.msg(result.msg);
-                    }
+        //动态加载下拉列表并绑定数据
+        $("#blogTypeLarge").html("");
+        var html = "";
+        $.ajax({
+            url: '../../classify/getclassify',
+            success: function (obj) {
+                //console.log(obj);
+                html += "<option value=''>------------请选择------------</option>"
+                for (i = 0; i < obj.data.length; i++) {
+                    html += ("<option value='" + obj.data[i].classifyId + "'>" + obj.data[i].classifyName + "</option>")
                 }
-            };
-            editor.customConfig.customAlert = function (info) {
-                layer.msg(info);
-            };
-            editor.create();
+                $("#blogTypeLarge").append(html);
+                form.render('select');
+            }
+        });
 
-        /*var editor1 = new wangEditor('#editor1');
-        editor1.customConfig.uploadImgServer = "../api/upload.json";
-        editor1.customConfig.uploadFileName = 'image';
-        editor1.customConfig.pasteFilterStyle = false;
-        editor1.customConfig.uploadImgMaxLength = 5;
-        editor1.customConfig.uploadImgHooks = {
+        //动态加载复选框并绑定数据
+        $("#fieldslist").html("");
+        var html2 = "";
+        //var s=$.('#fieldslist');
+        $.ajax({
+            type: "GET",
+            url:'../../label/getlabel',
+            success: function (obj) {//请求成功之后的操作
+                console.log(obj)
+                for (i = 0; i < obj.data.length; i++) {
+                    html2 += ("<input  type=\"checkbox\" name=\"like\" value='"+obj.data[i].labelName+"' />"+obj.data[i].labelName+"</<input>")
+                }
+                /*$.each(obj.data, function(index,data,labelName) {
+                    $("#fieldslist").append('<input type="checkbox" name="xxx" value="'+data.labelName+'" lay-skin="switch">');
+                });*/
+                $("#fieldslist").append(html2);
+                form.render('select');
+                //$("#fieldslist").append("<input type='checkbox' name='like[game]' title='游戏'>");
+
+            },
+        });
+
+        //初始化编辑器
+        var editor = new wangEditor('#editor');
+        var $text1 = $('#ncontent')
+        editor.customConfig.onchange = function (html) {
+            // 监控变化，同步更新到 textarea
+            $text1.val(html)
+        }
+        editor.customConfig.uploadImgServer = "../api/upload.json";
+        editor.customConfig.uploadFileName = 'image';
+        editor.customConfig.pasteFilterStyle = false;
+        editor.customConfig.uploadImgMaxLength = 5;
+        editor.customConfig.uploadImgHooks = {
             // 上传超时
             timeout: function (xhr, editor) {
                 layer.msg('上传超时！')
@@ -131,62 +163,55 @@
                 }
             }
         };
-        editor1.customConfig.customAlert = function (info) {
+        editor.customConfig.customAlert = function (info) {
             layer.msg(info);
         };
-        editor1.create();*/
+        editor.create();
+        // 初始化 textarea 的值
+        $text1.val(editor.txt.html())
+
+
+        form.on('checkbox(froms)', function (obj) {
+            console.log(obj)
+        });
+        function f(n){
+            var checkbox = $('layui-form-item input').eq(n).find('.layui-unselect layui-form-checkbox');
+            if (checkbox.attr("a") == "off") {
+                checkbox.children("div").css({
+                    "display" : "block"
+                });
+                checkbox.attr("a","on");
+            }else {
+                checkbox.children("div").css({
+                    "display" : "none"
+                });
+                checkbox.attr("a","off");
+            }
+        }
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-
-          /*  $.ajax({
-                url: '../../user/add',
+            console.log(data.field)
+            //提交数据
+            data.field.shstate = 1;
+            //return false;
+            $.ajax({
+                url: '../../posts/add',
                 data: data.field,
-                type:'get',
+                type: 'post',
                 success: function (code) {
-                layer.alert(code)
-            }});*/
-           /* $.ajax({
-                url:"../../user/add",
-                type:'post',
-                data:data.field,//向服务端发送数据
-                success:function(code){
-                    alert(code)
-                    if(code=='1'){
-                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                        layer.close(index);
-                        console.log(index);
-                        layer.msg("删除成功",{icon:1});
-                    }
-                    else{
-                        layer.msg("删除失败",{icon:5});
+                    if (code == '1') {
+                        layer.msg("删除成功", {icon: 1});
+                    } else {
+                        layer.msg("删除失败", {icon: 5});
                     }
                 }
-            });*/
 
-                //提交数据
-                    data.field.shstate = 1;
-                    //return false;
-                    $.ajax({
-                        url: '../../../user/add',
-                        data: data.field,
-                        type:'post',
-                        success: function (code) {
-                            if (code == '1') {
-                                layer.msg("删除成功", {icon: 1});
-                            } else {
-                                layer.msg("删除失败", {icon: 5});
-                            }
-                        }
-
-                    });
-                    //关闭窗口子窗口
-                var iframeIndex = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(iframeIndex);
-                //刷新父级窗口
-                window.parent.location.reload();
-
-
-
+            });
+            //关闭窗口子窗口
+            var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);
+            //刷新父级窗口
+            window.parent.location.reload();
             return false;
         });
 

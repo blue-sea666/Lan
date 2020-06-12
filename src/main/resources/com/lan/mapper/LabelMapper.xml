@@ -5,6 +5,11 @@
     <id column="label_id" property="labelId" jdbcType="INTEGER" />
     <result column="label_name" property="labelName" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="count" resultType="java.lang.Integer">select count(1) from label</select>
+  <select id="find" resultMap="BaseResultMap" >
+    select * from label
+
+  </select>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

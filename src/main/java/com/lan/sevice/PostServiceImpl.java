@@ -24,11 +24,11 @@ public class PostServiceImpl implements PostService {
         return postMapper.count();
     }
 
-    public Integer delUserById(Integer id) {
+    public Integer delPostById(Integer id) {
        return postMapper.deleteByPrimaryKey(id);
     }
 
-    public Integer addUsers(Post users) {
+    public Integer addPost(Post users) {
         return postMapper.insert(users);
     }
 
@@ -36,7 +36,7 @@ public class PostServiceImpl implements PostService {
         return null;//usersMapper.deleteByExample(ids);
     }
 
-    public Integer updateUsers(Post users) {
+    public Integer updatePost(Post users) {
         return postMapper.updateByPrimaryKey(users);
     }
 

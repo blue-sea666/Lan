@@ -51,7 +51,7 @@
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'classifyId', width: 80, title: 'ID', sort: true},
-                {field: 'classifyName', width: 80, title: '标签名称',minWidth: 200},
+                {field: 'classifyName', width: 80, title: '分类名称',minWidth: 200},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "right"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
@@ -213,7 +213,6 @@
 
                         //刷新父级窗口
                         window.location.reload();
-                        return false;
                     }
 
                 });

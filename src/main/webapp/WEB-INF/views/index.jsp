@@ -76,6 +76,7 @@
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
                 <li class="layui-nav-item layuimini-setting">
+                    <input type="hidden" id="useid" value="${UserInfo.userId}">
                     <a href="javascript:;">${UserInfo.usersName}</a>
                     <dl class="layui-nav-child">
                         <dd>
