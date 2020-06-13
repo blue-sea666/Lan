@@ -3,6 +3,8 @@ package com.lan.mapper;
 import com.lan.pojo.Users;
 import com.lan.pojo.UsersExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface UsersMapper {
@@ -30,7 +32,7 @@ public interface UsersMapper {
 
     Users login(Users users);
 
-    List<Users> find();
+    List<Users> find(Map<String, Object> map);
 
     Integer count();
 

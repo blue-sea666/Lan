@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -17,8 +18,8 @@ public class UsersServiceImpl implements UsersService {
         return u;
     }
 
-    public List<Users> find() {
-        return usersMapper.find();
+    public List<Users> find(Map<String, Object> map) {
+        return usersMapper.find(map);
     }
 
     public Integer getCount() {

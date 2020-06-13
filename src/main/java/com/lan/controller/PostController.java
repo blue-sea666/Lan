@@ -21,9 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/posts")
@@ -34,10 +32,14 @@ public class PostController {
     //获取表格数据
     @RequestMapping(value = "/getposts", method = RequestMethod.GET)
     @ResponseBody
-    public Object findById(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
-
+    public Object findById(HttpServletRequest request, HttpServletResponse response,Integer page,Integer limit) throws JsonProcessingException {
+        //获取从第几条数据开始
+        int pstart=(page -1) * limit;
+        Map map=new HashMap();
+        map.put("page",pstart);
+        map.put("size",limit);
         //获取所有用户存入list中
-        List<Post> list = postService.find();
+        List<Post> list = postService.find(map);
         //获取用户总数
         Integer cout = postService.getCount();
         //实例化listobject对象

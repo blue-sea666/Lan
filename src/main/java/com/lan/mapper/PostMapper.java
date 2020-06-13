@@ -5,6 +5,7 @@ import com.lan.pojo.PostExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PostMapper {
     int countByExample(PostExample example);
@@ -35,7 +36,7 @@ public interface PostMapper {
 
     int updateByPrimaryKey(Post record);
 
-    List<Post> find();
+    List<Post> find(Map<String,Object> map);
 
     Integer count();
 

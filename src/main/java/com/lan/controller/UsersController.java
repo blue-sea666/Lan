@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.peer.SystemTrayPeer;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,20 +45,16 @@ public class UsersController {
         }
 
     }
-
-    @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public @ResponseBody
-    List<Users> find() {
-        System.out.println("123");
-        System.out.println(usersService.find());
-        return usersService.find();
-    }
     //获取表格数据
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public void findById(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
-
+    public void findById(HttpServletRequest request, HttpServletResponse response,Integer page,Integer limit) throws JsonProcessingException {
+        //获取从第几条数据开始
+        int pstart=(page -1) * limit;
+        Map map=new HashMap();
+        map.put("page",pstart);
+        map.put("size",limit);
         //获取所有用户存入list中
-        List<Users> list = usersService.find();
+        List<Users> list = usersService.find(map);
         //获取用户总数
         Integer cout = usersService.getCount();
         //实例化listobject对象

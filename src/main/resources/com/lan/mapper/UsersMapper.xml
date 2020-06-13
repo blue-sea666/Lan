@@ -12,11 +12,22 @@
     <result column="users_qq" property="usersQq" jdbcType="VARCHAR" />
     <result column="suers_email" property="suersEmail" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="userresultMap" type="com.lan.pojo.Users" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="users_name" property="usersName" jdbcType="VARCHAR" />
+    <result column="users_password" property="usersPassword" jdbcType="VARCHAR" />
+    <result column="users_headimg" property="usersHeadimg" jdbcType="VARCHAR" />
+    <result column="users_signature" property="usersSignature" jdbcType="VARCHAR" />
+    <result column="users_sex" property="usersSex" jdbcType="VARCHAR" />
+    <result column="users_github_link" property="usersGithubLink" jdbcType="VARCHAR" />
+    <result column="users_qq" property="usersQq" jdbcType="VARCHAR" />
+    <result column="suers_email" property="suersEmail" jdbcType="VARCHAR" />
+  </resultMap>
   <select id="count" resultType="java.lang.Integer">select count(1) from users</select>
   <select id="login" resultMap="BaseResultMap" parameterType="com.lan.pojo.Users">
 select * from users where users_name=#{usersName} and users_password=#{usersPassword}</select>
-  <select id="find" resultMap="BaseResultMap" >
-select user_id,users_name,users_headimg,users_signature,users_sex,users_github_link,users_qq,suers_email from users
+  <select id="find" resultMap="userresultMap" >
+select user_id,users_name,users_headimg,users_signature,users_sex,users_github_link,users_qq,suers_email from users limit #{page},#{size}
 
 </select>
   <sql id="Example_Where_Clause" >

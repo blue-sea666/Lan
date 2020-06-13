@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -16,8 +17,8 @@ public class PostServiceImpl implements PostService {
     private PostMapper postMapper;
 
 
-    public List<Post> find() {
-        return postMapper.find();
+    public List<Post> find(Map<String,Object> map) {
+        return postMapper.find(map);
     }
 
     public Integer getCount() {

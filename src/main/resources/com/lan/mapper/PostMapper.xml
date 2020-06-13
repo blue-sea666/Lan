@@ -23,8 +23,8 @@
     <result column="post_content" property="postContent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <select id="count" resultType="java.lang.Integer">select count(1) from post</select>
-  <select id="find" resultMap="BaseResultMap" >
-    select p.*,c.classify_name,l1.label_name as post_label1_name,l2.label_name as post_label2_name,l3.label_name as post_label3_name   from post p left join classify c on p.post_classify_id=c.classify_id left join label l1 on l1.label_id=p.post_label1_id left join label l2 on l2.label_id=p.post_label2_id left join label l3 on l3.label_id=p.post_label3_id
+  <select id="find" resultMap="BaseResultMap"  >
+    select p.*,c.classify_name,l1.label_name as post_label1_name,l2.label_name as post_label2_name,l3.label_name as post_label3_name   from post p left join classify c on p.post_classify_id=c.classify_id left join label l1 on l1.label_id=p.post_label1_id left join label l2 on l2.label_id=p.post_label2_id left join label l3 on l3.label_id=p.post_label3_id limit #{page},#{size}
   </select>
   <select id="search"></select>
   <sql id="Example_Where_Clause" >

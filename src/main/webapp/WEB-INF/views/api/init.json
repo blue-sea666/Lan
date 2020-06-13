@@ -74,7 +74,7 @@
         },
         {
           "title": "关于",
-          "href": "page/login-1.html",
+          "href": "page/about.html",
           "icon": "fa fa-flag-o",
           "target": "_self"
         },

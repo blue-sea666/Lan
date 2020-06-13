@@ -3,6 +3,17 @@ package com.lan.pojo;
 import java.util.Date;
 
 public class Post {
+    private Integer page;
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    private Integer limit;
     private String userName;
 
     private Integer postId;
