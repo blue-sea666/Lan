@@ -73,6 +73,12 @@
           ]
         },
         {
+          "title": "留言",
+          "href": "page/leave.html",
+          "icon": "fa fa-snowflake-o",
+          "target": "_self"
+        },
+        {
           "title": "关于",
           "href": "page/about.html",
           "icon": "fa fa-flag-o",

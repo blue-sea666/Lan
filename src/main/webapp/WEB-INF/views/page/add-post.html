@@ -15,8 +15,11 @@
     </style>
 </head>
 <body>
-<form class="layui-form layuimini-form" lay-filter="froms">
+<form class="layui-form layuimini-form"  lay-filter="froms">
     <input type="hidden" name="postUserId" value="">
+    <input type="hidden" id="postLabel1Id" name="PostLabel1Id" value="">
+    <input type="hidden" id="postLabel2Id" name="PostLabel2Id" value="">
+    <input type="hidden" id="postLabel3Id"name="PostLabel3Id" value="">
     <div class="layui-form-item">
         <label class="layui-form-label required">标题</label>
         <div class="layui-input-block">
@@ -43,7 +46,7 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">标签</label>
-        <div class="layui-input-block" id="fieldslist">
+        <div class="layui-input-block" id="formitems">
             <input type="checkbox" name="like[write]" title="写作">
             <div class="layui-unselect layui-form-checkbox"><span>写作</span><i class="layui-icon layui-icon-ok"></i>
             </div>
@@ -54,13 +57,6 @@
             <div class="layui-unselect layui-form-checkbox"><span>发呆</span><i class="layui-icon layui-icon-ok"></i>
             </div>
         </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">标签</label>
-            <input type="checkbox" name="dd" title="写作">
-            <input type="checkbox" name="liked" title="阅读">
-            <input type="checkbox" name="like" title="发呆">
     </div>
 
     <div class="layui-form-item">
@@ -96,6 +92,7 @@
             $ = layui.$,
             upload = layui.upload,
             wangEditor = layui.wangEditor;
+
         //动态加载下拉列表并绑定数据
         $("#blogTypeLarge").html("");
         var html = "";
@@ -113,7 +110,7 @@
         });
 
         //动态加载复选框并绑定数据
-        $("#fieldslist").html("");
+        $("#formitems").html("");
         var html2 = "";
         //var s=$.('#fieldslist');
         $.ajax({
@@ -122,13 +119,15 @@
             success: function (obj) {//请求成功之后的操作
                 console.log(obj)
                 for (i = 0; i < obj.data.length; i++) {
-                    html2 += ("<input  type=\"checkbox\" name=\"like\" value='"+obj.data[i].labelName+"' />"+obj.data[i].labelName+"</<input>")
+                    html2 += ("<input type=\"checkbox\" lay-filter=\"checks\" name='label' value='"+obj.data[i].labelId+"'  title='"+obj.data[i].labelName+"'>\n" +
+                        "            <div  class=\"layui-unselect layui-form-checkbox\"><span>"+obj.data[i].labelName+"</span><i class=\"layui-icon layui-icon-ok\"></i>\n" +
+                        "            </div>");
                 }
                 /*$.each(obj.data, function(index,data,labelName) {
                     $("#fieldslist").append('<input type="checkbox" name="xxx" value="'+data.labelName+'" lay-skin="switch">');
                 });*/
-                $("#fieldslist").append(html2);
-                form.render('select');
+                $("#formitems").append(html2);
+                form.render('checkbox');
                 //$("#fieldslist").append("<input type='checkbox' name='like[game]' title='游戏'>");
 
             },
@@ -169,30 +168,62 @@
         editor.create();
         // 初始化 textarea 的值
         $text1.val(editor.txt.html())
-
-
-        form.on('checkbox(froms)', function (obj) {
-            console.log(obj)
-        });
-        function f(n){
-            var checkbox = $('layui-form-item input').eq(n).find('.layui-unselect layui-form-checkbox');
-            if (checkbox.attr("a") == "off") {
-                checkbox.children("div").css({
-                    "display" : "block"
-                });
-                checkbox.attr("a","on");
-            }else {
-                checkbox.children("div").css({
-                    "display" : "none"
-                });
-                checkbox.attr("a","off");
+        //监听表格复选框选择
+        form.on('checkbox(checks)', function (obj) {
+            var checked = document.getElementsByName("label");
+            var checked_counts = 0;
+            var s='';
+            for(var i = 0; i < checked.length; i ++){
+                if(checked[i].checked){
+                    checked_counts++;
+                    s+=checked[i].value+',';  //如果选中，将value添加到变量s中
+                }
             }
-        }
+            //layer.alert(s)
+            var str=new String();
+            var arr=new Array();
+            str=s;
+            //可以用字符或字符串分割
+            arr=str.split(',');
+            //console.log(arr[0]);
+            //绑定数据
+            $("#postLabel1Id").val(arr[0])
+            $("#postLabel2Id").val(arr[1])
+            $("#postLabel3Id").val(arr[2])
+
+            if(checked_counts>3){
+                layer.alert("只能选择三个标签")
+                $(this).prop("checked","");
+                form.render('checkbox');
+            }
+           /* console.log(checked_counts)
+            console.log(obj)*/
+        });
         //监听提交
         form.on('submit(saveBtn)', function (data) {
+            /*var checked = document.getElementsByName("label");
+            var checked_counts = 0;
+            var s='';
+            for(var i = 0; i < checked.length; i ++){
+                if(checked[i].checked){
+                    checked_counts++;
+                    s+=checked[i].value+',';  //如果选中，将value添加到变量s中
+                }
+            }
+            console.log(s)
+            var str=new String();
+            var arr=new Array();
+            str=s;
+            //可以用字符或字符串分割
+            arr=str.split(',');
+            //console.log(arr[0]);
+            data.PostLabel1Id=arr[0]
+            data.PostLabel2Id=arr[1]
+            data.PostLabel3Id=arr[2]*/
+            //console.log(data.label1Id)
             console.log(data.field)
             //提交数据
-            data.field.shstate = 1;
+            //data.field.shstate = 1;
             //return false;
             $.ajax({
                 url: '../../posts/add',

@@ -3,6 +3,7 @@ package com.lan.sevice;
 import com.lan.mapper.PostMapper;
 import com.lan.mapper.UsersMapper;
 import com.lan.pojo.Post;
+import com.lan.pojo.PostExample;
 import com.lan.pojo.Users;
 import com.lan.pojo.UsersExample;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,13 @@ public class PostServiceImpl implements PostService {
 
     public List<Post> search(Post users) {
         return postMapper.search(users);
+    }
+
+    public List<Post> getAll(Integer page,Integer size) {
+        PostExample example =new PostExample();
+        PostExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("post_id asc limit "+page+","+size);
+//相当于：select * from user where username = 'wyw' and  username is null order by username asc,email desc
+        return postMapper.selectByExampleWithBLOBs(example);
     }
 }

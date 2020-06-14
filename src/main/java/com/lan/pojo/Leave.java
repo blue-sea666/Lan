@@ -34,7 +34,7 @@ public class Leave {
     }
 
     public void setLeaveUsername(String leaveUsername) {
-        this.leaveUsername = leaveUsername == null ? null : leaveUsername.trim();
+        this.leaveUsername = leaveUsername;
     }
 
     public Date getLeaveTime() {
@@ -50,6 +50,6 @@ public class Leave {
     }
 
     public void setLeaveContent(String leaveContent) {
-        this.leaveContent = leaveContent == null ? null : leaveContent.trim();
+        this.leaveContent = leaveContent;
     }
 }

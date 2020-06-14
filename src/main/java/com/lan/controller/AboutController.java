@@ -27,14 +27,6 @@ public class AboutController {
     private AboutService aboutService;
 
     //获取关于我的信息
-    @RequestMapping("/getabouts")
-    public Map getAbout() {
-        About about = aboutService.getAbout();
-        Map map = new HashMap();
-        map.put("aboutInfo", about);
-        return map;
-    }
-
     @RequestMapping("/getabout")
     @ResponseBody
     public Object findById(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {

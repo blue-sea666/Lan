@@ -3,6 +3,8 @@ package com.lan.mapper;
 import com.lan.pojo.Leave;
 import com.lan.pojo.LeaveExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface LeaveMapper {
@@ -33,4 +35,8 @@ public interface LeaveMapper {
     int updateByPrimaryKeyWithBLOBs(Leave record);
 
     int updateByPrimaryKey(Leave record);
+
+    List<Leave> find(Map<String, Object> map);
+
+    Integer count();
 }

@@ -1,6 +1,7 @@
 package com.lan.sevice;
 
 import com.lan.pojo.Post;
+import com.lan.pojo.PostExample;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,6 @@ public interface PostService {
     Integer updatePost(Post post);
 
     List<Post> search(Post post);
+
+    List<Post> getAll(Integer page,Integer size);
 }

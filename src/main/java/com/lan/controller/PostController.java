@@ -34,12 +34,13 @@ public class PostController {
     @ResponseBody
     public Object findById(HttpServletRequest request, HttpServletResponse response,Integer page,Integer limit) throws JsonProcessingException {
         //获取从第几条数据开始
-        int pstart=(page -1) * limit;
-        Map map=new HashMap();
+        Integer pstart=(page -1) * limit;
+       /* Map map=new HashMap();
         map.put("page",pstart);
         map.put("size",limit);
         //获取所有用户存入list中
-        List<Post> list = postService.find(map);
+        List<Post> list = postService.find(map);*/
+        List<Post> list = postService.getAll(pstart,limit);
         //获取用户总数
         Integer cout = postService.getCount();
         //实例化listobject对象
@@ -78,6 +79,7 @@ public class PostController {
         response.setHeader("Access-Control-Allow-Origin", "*");
         post.setPostBrowse(0);
         post.setPostAddtime(new Date());
+        System.out.println(post.getPostLabel1Id());
         Integer integer = postService.addPost(post);
         ResponseUtils.renderText(response, integer.toString());
 

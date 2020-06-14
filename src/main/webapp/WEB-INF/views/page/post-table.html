@@ -179,7 +179,7 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/edit.html'
+                    content: '../page/modify-post.html'
 
                     ,success: function(layero, index) {
 
@@ -196,11 +196,11 @@
                         /* ---- 附加内容 看看就好 End ---- */
 
                         // 绑定数据
-                        body.find("#uid").val(data.userId);
-                        body.find("#username").val(data.usersName);
-                        body.find("#pwd").val(data.usersPassword);
-                        body.find("#link").val(data.usersGithubLink);
-                        body.find("#qq").val(data.usersQq);
+                        body.find("#postId").val(data.postId);
+                        body.find("#title").val(data.postTitle);
+                        body.find("#copyright").val(data.postCopyright);
+                        body.find("#ncontent").val(data.postContent);
+                        body.find("#blogTypeLarge").val(data.postClassifyId);
                         body.find("#ems").val(data.suersEmail);
                         body.find("#qm").val(data.usersSignature);
 
