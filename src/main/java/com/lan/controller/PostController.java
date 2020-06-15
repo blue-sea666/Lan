@@ -114,11 +114,11 @@ public class PostController {
         ResponseUtils.renderText(response, code);
     }
 
-    //添加修改
+    //修改
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void update(HttpServletResponse response, Post post) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        Integer integer = postService.updatePost(post);
+        Integer integer = postService.updatePostBlog(post);
         String code = "";
         if (integer > 0) {//添加成功
             code = "1";

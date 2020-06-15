@@ -17,7 +17,7 @@ public interface PostService {
     Integer addPost(Post post);
 
     Integer delAllUserById(String ids);
-
+    Integer updatePostBlog(Post post);
     Integer updatePost(Post post);
 
     List<Post> search(Post post);

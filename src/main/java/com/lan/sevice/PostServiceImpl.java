@@ -38,6 +38,10 @@ public class PostServiceImpl implements PostService {
         return null;//usersMapper.deleteByExample(ids);
     }
 
+    public Integer updatePostBlog(Post post) {
+        return postMapper.updateByPrimaryKeyWithBLOBs(post);
+    }
+
     public Integer updatePost(Post users) {
         return postMapper.updateByPrimaryKey(users);
     }

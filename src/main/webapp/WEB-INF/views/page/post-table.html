@@ -78,6 +78,8 @@
                 {field: 'postLabel1Name', width: 120, title: '标签1',sort: true},
                 {field: 'postLabel2Name', width: 120, title: '标签2',sort: true},
                 {field: 'postLabel3Name', width: 120, title: '标签3',sort: true},
+                /*{field: 'postLabel1Id', width: 120, title: '标签1',sort: true},
+                {field: 'postLabel2Id', width: 120, title: '标签2',sort: true},*/
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "right"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
@@ -200,9 +202,10 @@
                         body.find("#title").val(data.postTitle);
                         body.find("#copyright").val(data.postCopyright);
                         body.find("#ncontent").val(data.postContent);
-                        body.find("#blogTypeLarge").val(data.postClassifyId);
-                        body.find("#ems").val(data.suersEmail);
-                        body.find("#qm").val(data.usersSignature);
+                        body.find("#cla").val(data.postClassifyId);
+                        body.find("#postLabel1Id").val(data.postLabel1Id);
+                        body.find("#postLabel2Id").val(data.postLabel2Id);
+                        body.find("#postLabel3Id").val(data.postLabel3Id);
 
                         //div.find("#usersname").val("admin"); // 方式二
                     }

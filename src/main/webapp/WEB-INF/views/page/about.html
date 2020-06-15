@@ -53,7 +53,8 @@
                 // 监控变化，同步更新到 textarea
                 $text1.val(html)
             }
-            editor.customConfig.uploadImgServer = "../api/upload.json";
+            //editor.customConfig.uploadImgServer = "../api/upload.json";
+            editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
             editor.customConfig.uploadFileName = 'image';
             editor.customConfig.pasteFilterStyle = false;
             editor.customConfig.uploadImgMaxLength = 10;
@@ -107,7 +108,8 @@
             // 监控变化，同步更新到 textarea
             $text1.val(html)
         }
-        editor.customConfig.uploadImgServer = "../api/upload.json";
+        //editor.customConfig.uploadImgServer = "../api/upload.json";
+        editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
         editor.customConfig.uploadFileName = 'image';
         editor.customConfig.pasteFilterStyle = false;
         editor.customConfig.uploadImgMaxLength = 10;

@@ -140,9 +140,10 @@
             // 监控变化，同步更新到 textarea
             $text1.val(html)
         }
-        editor.customConfig.uploadImgServer = "../api/upload.json";
+        //editor.customConfig.uploadImgServer = "../api/upload.json";
         editor.customConfig.uploadFileName = 'image';
         editor.customConfig.pasteFilterStyle = false;
+        editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
         editor.customConfig.uploadImgMaxLength = 5;
         editor.customConfig.uploadImgHooks = {
             // 上传超时
