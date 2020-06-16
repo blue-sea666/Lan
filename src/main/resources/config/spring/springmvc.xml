@@ -24,4 +24,11 @@
     <mvc:resources location="/WEB-INF/views/js/" mapping="/views/js/**"></mvc:resources>
     <mvc:resources location="/WEB-INF/views/lib/" mapping="/views/lib/**"></mvc:resources>
     <mvc:resources location="/WEB-INF/views/page/" mapping="/views/page/**"></mvc:resources>
+    <!--<mvc:resources location="/web/css/" mapping="/css/**"></mvc:resources>
+    <mvc:resources location="/web/font/" mapping="/font/**"></mvc:resources>
+    <mvc:resources location="/web/font-awesome/" mapping="/font-awesome/**"></mvc:resources>
+    <mvc:resources location="/web/image/" mapping="/image/**"></mvc:resources>
+    <mvc:resources location="/web/js/" mapping="/js/**"></mvc:resources>
+    <mvc:resources location="/web/layui/" mapping="/layui/**"></mvc:resources>-->
+    <mvc:resources location="/web/" mapping="/web/**"></mvc:resources>
 </beans>
