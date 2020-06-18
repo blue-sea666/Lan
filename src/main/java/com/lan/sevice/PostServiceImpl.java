@@ -58,4 +58,8 @@ public class PostServiceImpl implements PostService {
 //相当于：select * from user where username = 'wyw' and  username is null order by username asc,email desc
         return postMapper.selectByExampleWithBLOBs(example);
     }
+
+    public Post getPostById(Integer id) {
+        return postMapper.selectByPrimaryKey(id);
+    }
 }

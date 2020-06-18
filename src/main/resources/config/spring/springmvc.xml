@@ -31,4 +31,5 @@
     <mvc:resources location="/web/js/" mapping="/js/**"></mvc:resources>
     <mvc:resources location="/web/layui/" mapping="/layui/**"></mvc:resources>-->
     <mvc:resources location="/web/" mapping="/web/**"></mvc:resources>
+
 </beans>

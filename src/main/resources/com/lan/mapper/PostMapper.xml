@@ -128,7 +128,8 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from post
+    ,classify.classify_name,l1.label_name as post_label1_name,l2.label_name as post_label2_name,l3.label_name as post_label3_name
+    from post  left join classify  on post.post_classify_id=classify.classify_id left join label l1 on l1.label_id=post.post_label1_id left join label l2 on l2.label_id=post.post_label2_id left join label l3 on l3.label_id=post.post_label3_id
     where post_id = #{postId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

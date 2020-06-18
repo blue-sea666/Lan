@@ -23,4 +23,6 @@ public interface PostService {
     List<Post> search(Post post);
 
     List<Post> getAll(Integer page,Integer size);
+
+    Post getPostById(Integer id);
 }

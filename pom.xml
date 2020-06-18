@@ -16,9 +16,76 @@
     <properties>
         <spring.version>4.1.1.RELEASE</spring.version>
     </properties>
+
     <build>
         <finalName>Lan</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>/web/font/*</exclude>
+                    <exclude>/web/font-awesome/fonts/*</exclude>
+                    <exclude>/web/css/**</exclude>
+                    <exclude>/web/**</exclude>
+                    <exclude>**/*.xml</exclude>
+                    <exclude>**/*.setting</exclude>
+                    <exclude>**/*.json</exclude>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.html</exclude>
+                    <exclude>**/*.map</exclude>
+                    <exclude>**/*.css</exclude>
+                    <exclude>**/*.gif</exclude>
+                    <exclude>**/*.png</exclude>
+                    <exclude>**/*.js</exclude>
+                    <exclude>**/*.eot</exclude>
+                    <exclude>**/*.svg</exclude>
+                    <exclude>**/*.ttf</exclude>
+                    <exclude>**/*.woff</exclude>
+                    <exclude>**/*.woff2</exclude>
+                </excludes>
+
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>/web/font/*</include>
+                    <include>/web/font-awesome/fonts/*</include>
+                    <include>/web/css/**</include>
+                    <include>/web/**</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.setting</include>
+                    <include>**/*.json</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.html</include>
+                    <include>**/*.map</include>
+                    <include>**/*.css</include>
+                    <include>**/*.gif</include>
+                    <include>**/*.png</include>
+                    <include>**/*.js</include>
+                    <include>**/*.eot</include>
+                    <include>**/*.svg</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.woff</include>
+                    <include>**/*.woff2</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
+           <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <filtering>false</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>-->
             <!--mybatis 逆向工程插件-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>

@@ -57,7 +57,23 @@ public class PostController {
         //ResponseUtils.renderJson(response, JsonUtils.toJson(listObject));
 
     }
+    //获取单条数据
+    @RequestMapping(value = "/getpostbyid", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findPostById(HttpServletRequest request, HttpServletResponse response,@RequestParam("id")Integer id) throws JsonProcessingException {
+        Post post = postService.getPostById(id);
+        //实例化listobject对象
+        ListObject listObject = new ListObject();
+        //给listobject对象的属性赋值
+        listObject.setDatas(post);
+        listObject.setCode(StatusCode.CODE_SUCCESS);
+        listObject.setMsg("访问成功");
+        return listObject;
+        //System.out.println(listObject.toString());
+        //将listobject转成json格式并响应到客户端
+        //ResponseUtils.renderJson(response, JsonUtils.toJson(listObject));
 
+    }
     //删除
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public void delUserById(HttpServletResponse response, @RequestParam("pid") Integer id) {
@@ -118,6 +134,14 @@ public class PostController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void update(HttpServletResponse response, Post post) {
         response.setHeader("Access-Control-Allow-Origin", "*");
+        Post post1=postService.getPostById(post.getPostId());
+        if (post.getPostAddtime()==null){
+            post.setPostAddtime(post1.getPostAddtime());
+        }
+        if (post.getPostBrowse()==null){
+            post.setPostBrowse(post1.getPostBrowse());
+        }
+        post.setPostUpdatetime(new Date());
         Integer integer = postService.updatePostBlog(post);
         String code = "";
         if (integer > 0) {//添加成功
