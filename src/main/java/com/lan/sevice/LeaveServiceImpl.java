@@ -34,4 +34,8 @@ public class LeaveServiceImpl implements LeaveService {
         return null;//usersMapper.deleteByExample(ids);
     }
 
+    public List<Leave> getAll() {
+        return leaveMapper.selectAll();
+    }
+
 }

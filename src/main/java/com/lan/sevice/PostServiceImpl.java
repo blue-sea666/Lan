@@ -1,11 +1,9 @@
 package com.lan.sevice;
 
+import com.lan.mapper.PostCommentsMapper;
 import com.lan.mapper.PostMapper;
 import com.lan.mapper.UsersMapper;
-import com.lan.pojo.Post;
-import com.lan.pojo.PostExample;
-import com.lan.pojo.Users;
-import com.lan.pojo.UsersExample;
+import com.lan.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +14,8 @@ import java.util.Map;
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostMapper postMapper;
+    @Autowired
+    private PostCommentsMapper postCommentsMapper;
 
 
     public List<Post> find(Map<String,Object> map) {
@@ -61,5 +61,12 @@ public class PostServiceImpl implements PostService {
 
     public Post getPostById(Integer id) {
         return postMapper.selectByPrimaryKey(id);
+    }
+
+    public List<PostComments> getAllCommtentsByPostId(Integer id) {
+        PostCommentsExample example =new PostCommentsExample();
+        PostCommentsExample.Criteria criteria = example.createCriteria();
+        example.createCriteria().andPostCommentsPostIdEqualTo(id);
+        return postCommentsMapper.selectByExample(example);
     }
 }

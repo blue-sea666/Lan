@@ -2,6 +2,7 @@ package com.lan.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lan.pojo.Post;
+import com.lan.pojo.PostComments;
 import com.lan.pojo.Users;
 import com.lan.sevice.PostService;
 import com.lan.sevice.UsersService;
@@ -66,6 +67,23 @@ public class PostController {
         ListObject listObject = new ListObject();
         //给listobject对象的属性赋值
         listObject.setDatas(post);
+        listObject.setCode(StatusCode.CODE_SUCCESS);
+        listObject.setMsg("访问成功");
+        return listObject;
+        //System.out.println(listObject.toString());
+        //将listobject转成json格式并响应到客户端
+        //ResponseUtils.renderJson(response, JsonUtils.toJson(listObject));
+
+    }
+    //获取评论
+    @RequestMapping(value = "/getallcommtentsid", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getAllCommtentsByPostId(HttpServletRequest request, HttpServletResponse response,@RequestParam("postid")Integer id) throws JsonProcessingException {
+        List<PostComments> postComments = postService.getAllCommtentsByPostId(id);
+        //实例化listobject对象
+        ListObject listObject = new ListObject();
+        //给listobject对象的属性赋值
+        listObject.setData(postComments);
         listObject.setCode(StatusCode.CODE_SUCCESS);
         listObject.setMsg("访问成功");
         return listObject;

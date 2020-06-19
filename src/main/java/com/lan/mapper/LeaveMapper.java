@@ -39,4 +39,6 @@ public interface LeaveMapper {
     List<Leave> find(Map<String, Object> map);
 
     Integer count();
+
+    List<Leave> selectAll();
 }

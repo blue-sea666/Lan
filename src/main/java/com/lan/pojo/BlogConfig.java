@@ -9,6 +9,8 @@ public class BlogConfig {
 
     private String configIpc;
 
+    private String configSignature;
+
     public Integer getConfigId() {
         return configId;
     }
@@ -39,5 +41,13 @@ public class BlogConfig {
 
     public void setConfigIpc(String configIpc) {
         this.configIpc = configIpc == null ? null : configIpc.trim();
+    }
+
+    public String getConfigSignature() {
+        return configSignature;
+    }
+
+    public void setConfigSignature(String configSignature) {
+        this.configSignature = configSignature == null ? null : configSignature.trim();
     }
 }

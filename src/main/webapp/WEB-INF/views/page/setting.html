@@ -72,12 +72,12 @@
                     <textarea name="keywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"></textarea>
                 </div>
             </div>-->
-            <!--<div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">META描述</label>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">个性签名</label>
                 <div class="layui-input-block">
-                    <textarea name="descript" id="title" class="layui-textarea"></textarea>
+                    <textarea name="configSignature" id="title" class="layui-textarea"></textarea>
                 </div>
-            </div>-->
+            </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label required">版权信息</label>
                 <div class="layui-input-block">
@@ -113,50 +113,14 @@
                         "configCopyright": result.datas.configCopyright,
                         "configIpc": result.datas.configIpc,
                         "configId": result.datas.configId,
+                        "configSignature": result.datas.configSignature,
+
                     });
                     console.log(result);
                 }
             })
         }
-        //给表单赋值
-       /* form.render({ //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
-                type: 'get',
-                url: '../../blogconfig/getInfos',
-                dataType: "json",
-            success: function (result) {
-                    layer.alert(result)
-                form.val('y', {
-                    "sitename": result.configName,
 
-                });
-                console.log(result);
-            }})*/
-           /* $.ajax({
-                type: 'get',
-                url: '/Home/GetCanshuData',
-                dataType: 'json',
-                success: function (result) {
-                    form.val('example', {
-                        "BaseStationState": result.BaseStationState,
-                        "Base_IP": result.Base_IP,
-                        "Base_Prot": result.Base_Prot
-                    });
-                    console.log(result);
-                }
-            })*!/
-            /!*"sitename": "贤心" // "name": "value"
-            ,"sex": "女"
-            ,"auth": 3
-            ,"check[write]": true
-            ,"open": false
-            ,"title": "我爱layui"*!/
-        });
-*/
-       /* //获取表单区域所有值
-        var data1 = form.val("formTest");*!/
-        form.render({
-
-        });*/
         //监听提交
         form.on('submit(setting)', function (data) {
                 //提交数据

@@ -8,9 +8,19 @@
     <result column="leave_time" property="leaveTime" jdbcType="TIMESTAMP" />
     <result column="leave_content" property="leaveContent" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="LeaveResultMap" type="com.lan.pojo.Leave" >
+    <id column="leave_id" property="leaveId" jdbcType="INTEGER" />
+    <result column="leave_pid" property="leavePid" jdbcType="INTEGER" />
+    <result column="leave_username" property="leaveUsername" jdbcType="VARCHAR" />
+    <result column="leave_time" property="leaveTime" jdbcType="TIMESTAMP" />
+    <result column="leave_content" property="leaveContent" jdbcType="VARCHAR" />
+  </resultMap>
   <select id="count" resultType="java.lang.Integer">select count(1) from leaves</select>
   <select id="find" resultMap="BaseResultMap" >
     select * from leaves where leave_pid=0 limit #{page},#{size}
+  </select>
+  <select id="selectAll" resultMap="LeaveResultMap" >
+    select * from leaves
   </select>
   <sql id="Example_Where_Clause" >
     <where >

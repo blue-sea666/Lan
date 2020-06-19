@@ -17,4 +17,5 @@ public interface LeaveService {
 
     Integer delAllLeaveById(String ids);
 
+    List<Leave> getAll();
 }

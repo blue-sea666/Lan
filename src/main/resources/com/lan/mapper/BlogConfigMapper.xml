@@ -6,6 +6,7 @@
     <result column="config_name" property="configName" jdbcType="VARCHAR" />
     <result column="config_copyright" property="configCopyright" jdbcType="VARCHAR" />
     <result column="config_ipc" property="configIpc" jdbcType="VARCHAR" />
+    <result column="config_signature" property="configSignature" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    config_id, config_name, config_copyright, config_ipc
+    config_id, config_name, config_copyright, config_ipc, config_signature
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lan.pojo.BlogConfigExample" >
     select
@@ -100,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="com.lan.pojo.BlogConfig" >
     insert into blog_config (config_id, config_name, config_copyright, 
-      config_ipc)
+      config_ipc, config_signature)
     values (#{configId,jdbcType=INTEGER}, #{configName,jdbcType=VARCHAR}, #{configCopyright,jdbcType=VARCHAR}, 
-      #{configIpc,jdbcType=VARCHAR})
+      #{configIpc,jdbcType=VARCHAR}, #{configSignature,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lan.pojo.BlogConfig" >
     insert into blog_config
@@ -119,6 +120,9 @@
       <if test="configIpc != null" >
         config_ipc,
       </if>
+      <if test="configSignature != null" >
+        config_signature,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="configId != null" >
@@ -132,6 +136,9 @@
       </if>
       <if test="configIpc != null" >
         #{configIpc,jdbcType=VARCHAR},
+      </if>
+      <if test="configSignature != null" >
+        #{configSignature,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="record.configIpc != null" >
         config_ipc = #{record.configIpc,jdbcType=VARCHAR},
       </if>
+      <if test="record.configSignature != null" >
+        config_signature = #{record.configSignature,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set config_id = #{record.configId,jdbcType=INTEGER},
       config_name = #{record.configName,jdbcType=VARCHAR},
       config_copyright = #{record.configCopyright,jdbcType=VARCHAR},
-      config_ipc = #{record.configIpc,jdbcType=VARCHAR}
+      config_ipc = #{record.configIpc,jdbcType=VARCHAR},
+      config_signature = #{record.configSignature,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +194,9 @@
       <if test="configIpc != null" >
         config_ipc = #{configIpc,jdbcType=VARCHAR},
       </if>
+      <if test="configSignature != null" >
+        config_signature = #{configSignature,jdbcType=VARCHAR},
+      </if>
     </set>
     where config_id = #{configId,jdbcType=INTEGER}
   </update>
@@ -190,7 +204,8 @@
     update blog_config
     set config_name = #{configName,jdbcType=VARCHAR},
       config_copyright = #{configCopyright,jdbcType=VARCHAR},
-      config_ipc = #{configIpc,jdbcType=VARCHAR}
+      config_ipc = #{configIpc,jdbcType=VARCHAR},
+      config_signature = #{configSignature,jdbcType=VARCHAR}
     where config_id = #{configId,jdbcType=INTEGER}
   </update>
 </mapper>

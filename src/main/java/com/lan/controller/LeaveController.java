@@ -52,6 +52,28 @@ public class LeaveController {
         return listObject;
 
     }
+    //获取表格数据
+    @RequestMapping(value = "/getAllleave", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getAll(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+
+        //获取所有留言存入list中
+        List<Leave> list = leaveService.getAll();
+        //获取用户总数
+        Integer cout = leaveService.getCount();
+        //实例化listobject对象
+        ListObject listObject = new ListObject();
+        //给listobject对象的属性赋值
+        listObject.setData(list);
+        listObject.setCode(StatusCode.CODE_SUCCESS);
+        listObject.setMsg("访问成功");
+        listObject.setCount(cout);
+        //System.out.println(listObject.toString());
+        //将listobject转成json格式并响应到客户端
+        //ResponseUtils.renderJson(response, JsonUtils.toJson(listObject));
+        return listObject;
+
+    }
 
     //删除
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

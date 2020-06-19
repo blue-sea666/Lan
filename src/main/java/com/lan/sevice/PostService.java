@@ -1,6 +1,7 @@
 package com.lan.sevice;
 
 import com.lan.pojo.Post;
+import com.lan.pojo.PostComments;
 import com.lan.pojo.PostExample;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface PostService {
     List<Post> getAll(Integer page,Integer size);
 
     Post getPostById(Integer id);
+
+    List<PostComments> getAllCommtentsByPostId(Integer id);
 }
